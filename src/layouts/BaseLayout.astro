@@ -1,7 +1,8 @@
 ---
-import { Footer, Header, ThemeProvider } from 'astro-pure/components/basic'
+import { Footer, ThemeProvider } from 'astro-pure/components/basic'
 import type { SiteMeta } from 'astro-pure/types'
 import BaseHead from '@/components/BaseHead.astro'
+import Header from '@/components/layout/Header.astro'
 import config from '@/site-config'
 
 // Import the global.css file here so that it is included on
@@ -87,5 +88,51 @@ const {
         }
       }
     </style>
+
+    <script>
+      // ---- 中英界面切换 ----
+      // 默认中文：页面 HTML 本身就是中文，[data-en] 里存着对应的英文
+      // 点右上角 EN / 中 按钮会把文案整体替换，并把选择记在浏览器里
+      const LANG_KEY = 'pref-lang'
+      type Lang = 'zh' | 'en'
+
+      const getLang = (): Lang => (localStorage.getItem(LANG_KEY) as Lang) || 'zh'
+
+      function cacheZh() {
+        document.querySelectorAll<HTMLElement>('[data-en]').forEach((el) => {
+          if (!el.dataset.zh) el.dataset.zh = el.textContent ?? ''
+        })
+      }
+
+      function applyLang(lang: Lang) {
+        document.querySelectorAll<HTMLElement>('[data-en]').forEach((el) => {
+          el.textContent = lang === 'en' ? (el.dataset.en ?? '') : (el.dataset.zh ?? '')
+        })
+        document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN'
+        const btn = document.getElementById('toggleLang')
+        if (btn) {
+          btn.textContent = lang === 'en' ? '中' : 'EN'
+          btn.setAttribute('title', lang === 'en' ? '切换到中文' : 'Switch to English')
+        }
+      }
+
+      function initI18n() {
+        cacheZh()
+        applyLang(getLang())
+        document
+          .getElementById('toggleLang')
+          ?.addEventListener('click', () => {
+            const next: Lang = getLang() === 'en' ? 'zh' : 'en'
+            localStorage.setItem(LANG_KEY, next)
+            applyLang(next)
+          })
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initI18n)
+      } else {
+        initI18n()
+      }
+    </script>
   </body>
 </html>

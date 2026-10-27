@@ -14,10 +14,10 @@ export const theme: ThemeUserConfig = {
   socialCard: '/images/social-card.png',
   /** Specify the default language for this site. */
   locale: {
-    lang: 'en-US',
-    attrs: 'en_US',
+    lang: 'zh-CN',
+    attrs: 'zh_CN',
     // Date locale
-    dateLocale: 'en-US',
+    dateLocale: 'zh-CN',
     dateOptions: {
       day: 'numeric',
       month: 'short',
@@ -26,8 +26,8 @@ export const theme: ThemeUserConfig = {
   },
   /** Set a logo image to show in the homepage. */
   logo: {
-    src: '/src/assets/avatar.png',
-    alt: 'Avatar'
+    src: '/src/assets/avatar.svg',
+    alt: 'Buran'
   },
 
   titleDelimiter: '•',
@@ -48,11 +48,11 @@ export const theme: ThemeUserConfig = {
   /** Configure the header of your site. */
   header: {
     menu: [
-      { title: 'Blog', link: '/blog' },
-      { title: 'Docs', link: '/docs' },
-      { title: 'Projects', link: '/projects' },
-      { title: 'Links', link: '/links' },
-      { title: 'About', link: '/about' }
+      { title: '文章', link: '/blog' },
+      { title: '文档', link: '/docs' },
+      { title: '项目', link: '/projects' },
+      { title: '友链', link: '/links' },
+      { title: '关于', link: '/about' }
     ]
   },
 
@@ -64,13 +64,13 @@ export const theme: ThemeUserConfig = {
     links: [
       // Privacy Policy link
       {
-        title: 'Site Policy',
+        title: '站点条款',
         link: '/terms',
         pos: 2 // position set to 2 will be appended to copyright line
       }
     ],
     /** Enable displaying a “Astro & Pure theme powered” link in your site’s footer. */
-    credits: true,
+    credits: false,
     /** Optional details about the social media accounts for this site. */
     social: [
       { icon: 'github', label: 'GitHub', href: 'https://github.com/buran567' },
@@ -101,13 +101,7 @@ export const integ: IntegrationUserConfig = {
   // https://astro-pure.js.org/docs/integrations/links
   links: {
     // Friend logbook
-    logbook: [
-      { date: '2025-03-16', content: 'Is there a leakage?' },
-      { date: '2025-03-16', content: 'A leakage of what?' },
-      { date: '2025-03-16', content: 'I have a full seat of water, like, full of water!' },
-      { date: '2025-03-16', content: 'Must be the water.' },
-      { date: '2025-03-16', content: "Let's add that to the words of wisdom." }
-    ],
+    logbook: [],
     // Yourself link info
     applyTip: [
       { name: 'Name', val: theme.title },
@@ -159,7 +153,8 @@ export const integ: IntegrationUserConfig = {
   waline: {
     enable: false,
     // Server service link
-    server: 'https://astro-theme-pure-waline.arthals.ink/',
+    // 想开启评论时，自己部署一个 Waline 服务端并把地址填在这里
+    server: '',
     // Show meta info for comments
     showMeta: false,
     // Refer https://waline.js.org/en/guide/features/emoji.html
